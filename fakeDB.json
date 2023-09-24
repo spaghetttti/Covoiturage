@@ -1,0 +1,34 @@
+{
+    "routes": [
+      {
+        "departure": "City A",
+        "arrival": "City B",
+        "date": "2023-09-25",
+        "name": "Route 1"
+      },
+      {
+        "departure": "City C",
+        "arrival": "City D",
+        "date": "2023-09-26",
+        "name": "Route 2"
+      },
+      {
+        "departure": "City E",
+        "arrival": "City F",
+        "date": "2023-09-27",
+        "name": "Route 3"
+      },
+      {
+        "departure": "City G",
+        "arrival": "City H",
+        "date": "2023-09-28",
+        "name": "Route 4"
+      },
+      {
+        "departure": "City I",
+        "arrival": "City J",
+        "date": "2023-09-29",
+        "name": "Route 5"
+      }
+    ]
+  }
