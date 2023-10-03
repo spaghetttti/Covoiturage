@@ -1,43 +1,70 @@
 <?php
 
-// Configurer les informations de connexion à MySQL
-$servername = "localhost";
-$username = "root";
-$password = "azizbekloh";
-$dbname = "nom_de_votre_base_de_donnees";
 
-try {
+function getDatabaseConnection()
+{
+    try {
+        // Configurer les informations de connexion à MySQL
+        $servername = "localhost";
+        $username = "root";
+        $password = "azizbekloh";
+        $dbname = "nom_de_votre_base_de_donnees";
 
-    $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-    $pdo->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, false);
+        $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+        $pdo->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, false);
+        return $pdo;
 
-    $unbufferedResult = $pdo->query("SELECT * FROM Internautes;");
-    foreach ($unbufferedResult as $row) {
-        echo $row['email'] . PHP_EOL;
+    } catch (PDOException $e) {
+        echo "Erreur with db connection: " . $e->getMessage();
+        die();
     }
-    // // Connexion à MySQL sans spécifier de base de données
-    // $conn = new PDO("mysql:host=$servername", $username, $password);
-
-    // // Définir le mode d'erreur PDO sur Exception
-    // $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    // // Requête de création de la base de données
-    // $createDBSQL = "CREATE DATABASE IF NOT EXISTS nom_de_votre_base_de_donnees";
-
-    // // Exécution de la requête de création de la base de données
-    // $conn->exec($createDBSQL);
-
-    // echo "La base de données a été créée avec succès.";
-
-    // // Sélection de la base de données nouvellement créée
-    // $conn->exec("USE nom_de_votre_base_de_donnees");
-
-    // echo "La table Internautes a été créée et les données fictives ont été insérées avec succès.";
-} catch (PDOException $e) {
-    echo "Erreur : " . $e->getMessage();
 }
 
-// Fermeture de la connexion à MySQL
-$conn = null;
+function getAllRoutes()
+{
+    $connection = getDatabaseConnection();
+    $request = "SELECT * FROM Trajets;";
+    $statement = $connection->query($request);
+    return $statement->fetchAll();
+    // var_dump($unbufferedResult);
+    // foreach ($unbufferedResult as $row) {
+    //     echo $row['email'] . PHP_EOL;
+    // }
+}
+
+function getRoute($id)
+{
+    $connection = getDatabaseConnection();
+    $request = "SELECT * FROM Trajets WHERE idTrajet = '$id';";
+    $statement = $connection->query($request);
+    $row = $statement->fetchAll();
+    if (!empty($row[0])) {
+        return $row[0];
+    }
+}
+
+function deleteRoute($id)
+{
+    try {
+        $connection = getDatabaseConnection();
+        $request = "DELETE FROM Trajets WHERE idTrajet = '$id'; ";
+        $statement = $connection->query($request);
+    } catch (PDOException $e) {
+        echo "La suppression a échoué: " . $e->getMessage();
+        die();
+    }
+}
+
+function createRoute($idTrajet, $villeDepart, $villeArrivee, $prixRecommande)
+{
+    try {
+        $connection = getDatabaseConnection();
+        $request = "INSERT INTO Trajets (idTrajet, villeDepart, villeArrivee, prixRecommande) VALUES ('$idTrajet', '$villeDepart', '$villeArrivee','$prixRecommande')";
+        $connection->exec($request);
+    } catch (PDOException $e) {
+        echo $request . "<br>" . $e->getMessage();
+    }
+
+}
 
 ?>

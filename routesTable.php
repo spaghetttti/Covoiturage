@@ -1,33 +1,38 @@
 <?php
 $jsonData = file_get_contents('fakeDB.json');
-
-// Decode the JSON data into a PHP array
-$routes = json_decode($jsonData, true);
+$Fakeroutes = json_decode($jsonData, true);
+include('db.php');
+$routes = getAllRoutes();
+// var_dump($routes);
+// // var_dump($Fakeroutes);
 ?>
 <div class="routes-table">
-        <h1>Routes</h1>
+    <h1>Routes</h1>
     <table>
         <tr>
-            <th>Départ</th>
+            <th>idTrajet</th>
+            <th>Depart</th>
             <th>Arrivée</th>
+            <th>prixRecommande €</th>
             <th>Date</th>
-            <th>Nom</th>
         </tr>
-        <?php foreach ($routes['routes'] as $route): ?>
+
+        <?php foreach ($routes as $route): ?>
             <tr>
                 <td>
-                    <?php echo $route['departure']; ?>
+                    <?php echo $route['idTrajet']; ?>
                 </td>
                 <td>
-                    <?php echo $route['arrival']; ?>
+                    <?php echo $route['villeDepart']; ?>
                 </td>
                 <td>
-                    <?php echo $route['date']; ?>
+                    <?php echo $route['villeArrivee']; ?>
                 </td>
                 <td>
-                    <?php echo $route['name']; ?>
+                    <?php echo $route['prixRecommande']; ?>
                 </td>
             </tr>
         <?php endforeach; ?>
+
     </table>
 </div>
