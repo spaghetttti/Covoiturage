@@ -1,4 +1,5 @@
 <?php 
-
-var_dump($_POST);
+include('../db.php');
+$idTrajet = $_POST['idTrajet'];
+deleteRoute($idTrajet);
 ?>
