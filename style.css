@@ -38,7 +38,16 @@ form button {
   cursor: pointer;
 }
 
-.routes-table , table {
+form button.delete {
+  background-color: #d9d9d9;
+  color: #000000;
+  padding: 9px 19px;
+  border: solid 1px #000000;
+  cursor: pointer;
+}
+
+.routes-table,
+table {
   margin: 20px auto;
   border-collapse: collapse;
   width: 80%;
@@ -63,4 +72,10 @@ table th {
 .carpool-utils > form > h3 {
   margin-bottom: 10px;
   margin-top: 0;
+}
+
+.edit-icon {
+  display: flex;
+  justify-content: center;
+  color: deepskyblue;
 }

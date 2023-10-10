@@ -66,5 +66,14 @@ function createRoute($idTrajet, $villeDepart, $villeArrivee, $prixRecommande)
     }
 
 }
-
+function updateRoute($idTrajet, $villeDepart, $villeArrivee, $prixRecommande)
+{
+    try {
+        $connection = getDatabaseConnection();
+        $request = "UPDATE Trajets SET villeDepart = '$villeDepart', villeArrivee = '$villeArrivee', prixRecommande = '$prixRecommande' WHERE idTrajet = '$idTrajet'";
+        $connection->exec($request);
+    } catch (PDOException $e) {
+        echo $request . "<br>" . $e->getMessage();
+    }
+}
 ?>

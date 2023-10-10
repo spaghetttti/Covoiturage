@@ -6,6 +6,7 @@ $routes = getAllRoutes();
 // var_dump($routes);
 // // var_dump($Fakeroutes);
 ?>
+
 <div class="routes-table">
     <h1>Routes</h1>
     <table>
@@ -14,10 +15,11 @@ $routes = getAllRoutes();
             <th>Depart</th>
             <th>Arrivée</th>
             <th>prixRecommande €</th>
+            <th>Edit</th>
             <th>Date</th>
         </tr>
 
-        <?php foreach ($routes as $route): ?>
+        <?php foreach ($routes as $route) : ?>
             <tr>
                 <td>
                     <?php echo $route['idTrajet']; ?>
@@ -31,8 +33,19 @@ $routes = getAllRoutes();
                 <td>
                     <?php echo $route['prixRecommande']; ?>
                 </td>
+                <td class='edit-icon'>
+                    <?php include('./components/popup.php') ?>
+                </td>
+                <td>
+                    <?php
+                    $url = './components/editForm.php?' . urlencode($route['idTrajet']);
+                    ?>
+
+                    <a href="<?php echo $url; ?>">Edit page</a>
+                </td>
             </tr>
         <?php endforeach; ?>
 
     </table>
+
 </div>
