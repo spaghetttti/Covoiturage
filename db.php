@@ -1,6 +1,4 @@
 <?php
-
-
 function getDatabaseConnection()
 {
     try {
@@ -13,23 +11,27 @@ function getDatabaseConnection()
         $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
         $pdo->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, false);
         return $pdo;
-
     } catch (PDOException $e) {
-        echo "Erreur with db connection: " . $e->getMessage();
+        echo "Error with db connection: " . $e->getMessage();
         die();
     }
 }
 
-function getAllRoutes()
+function getAllRoutes($searchParams = null)
 {
-    $connection = getDatabaseConnection();
-    $request = "SELECT * FROM Trajets;";
-    $statement = $connection->query($request);
-    return $statement->fetchAll();
-    // var_dump($unbufferedResult);
-    // foreach ($unbufferedResult as $row) {
-    //     echo $row['email'] . PHP_EOL;
-    // }
+    try {
+        $connection = getDatabaseConnection();
+        if (empty($searchParams)) {
+            $request = "SELECT * FROM Trajets;";
+        } else {
+            $request = "SELECT * FROM Trajets WHERE villeDepart = \"{$searchParams['villeDepart']}\" AND villeArrivee = \"{$searchParams['villeArrivee']}\" AND prixRecommande = \"{$searchParams['prixRecommande']}\"";
+        }
+        // $request = empty($searchParams) ? "SELECT * FROM Trajets;" : "SELECT Trajets WHERE villeDepart = {$searchParams['villeDepart']} AND villeArrivee = {$searchParams['villeArrivee']} AND prixRecommande = {$searchParams['prixRecommande']}";
+        $statement = $connection->query($request);
+        return $statement->fetchAll();
+    } catch (PDOException $e) {
+        echo $request . "<br>" . $e->getMessage();
+    }
 }
 
 function getRoute($id)
@@ -64,7 +66,6 @@ function createRoute($idTrajet, $villeDepart, $villeArrivee, $prixRecommande)
     } catch (PDOException $e) {
         echo $request . "<br>" . $e->getMessage();
     }
-
 }
 function updateRoute($idTrajet, $villeDepart, $villeArrivee, $prixRecommande)
 {
@@ -76,4 +77,13 @@ function updateRoute($idTrajet, $villeDepart, $villeArrivee, $prixRecommande)
         echo $request . "<br>" . $e->getMessage();
     }
 }
-?>
+
+function searchRoute($villeDepart, $villeArrivee, $prixRecommande)
+{
+    $searchParams = [
+        "villeDepart" => $villeDepart,
+        "villeArrivee" => $villeArrivee,
+        "prixRecommande" => $prixRecommande
+    ];
+    return getAllRoutes($searchParams);
+}

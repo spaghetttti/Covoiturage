@@ -1,7 +1,3 @@
-<?php
-// include('./createCarpool.php');
-// ?>
-
 <form method="GET" action="./helper/createCarpool.php">
     <h3>Créer un covoiturage</h3>
     <label for="route">Entrez le id (sera supprimé plus tard):</label><br />

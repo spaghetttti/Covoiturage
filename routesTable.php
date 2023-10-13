@@ -1,8 +1,11 @@
 <?php
 $jsonData = file_get_contents('fakeDB.json');
 $Fakeroutes = json_decode($jsonData, true);
-include('db.php');
+require_once('db.php');
 $routes = getAllRoutes();
+if ($_SERVER['REQUEST_METHOD'] === 'POST') { 
+    $routes = searchRoute($_POST['villeDepart'], $_POST['villeArrivee'], $_POST['prixRecommande']);
+}
 // var_dump($routes);
 // // var_dump($Fakeroutes);
 ?>
