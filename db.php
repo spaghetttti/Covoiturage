@@ -17,6 +17,25 @@ function getDatabaseConnection()
     }
 }
 
+// function auth($authEmail, $authPassword)
+// {
+//     try {
+//         $connection = getDatabaseConnection();
+//         if ($stmt = $connection->prepare('SELECT id, password FROM Internautes WHERE username = ?')) {
+    //             // Bind parameters (s = string, i = int, b = blob, etc), in our case the username is a string so we use "s"
+//             $stmt->bindParam('s', $_POST['username']);
+//             $stmt->execute();
+//             // Store the result so we can check if the account exists in the database.
+//             $stmt->storeResult();
+
+
+//             $stmt->close();
+//         }
+//     } catch (PDOException $e) {
+//         echo $request . "<br>" . $e->getMessage();
+//     }
+// }
+
 function getAllRoutes($searchParams = null)
 {
     try {
